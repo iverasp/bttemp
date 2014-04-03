@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.UUID;
 
 import android.content.Context;
+import android.view.animation.AnimationUtils;
 import android.widget.*;
 import com.iegget.temp.R;
 
@@ -25,6 +26,9 @@ import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
+import com.jjoe64.graphview.GraphView;
+import com.jjoe64.graphview.GraphViewSeries;
+import com.jjoe64.graphview.LineGraphView;
 
 public class MainActivity extends Activity {
     private static final String TAG = "bluetooth2";
@@ -46,6 +50,11 @@ public class MainActivity extends Activity {
     private static String address = "00:14:02:25:00:26";
 
     private int response;
+    ViewFlipper viewFlipper;
+    Button graphs;
+    LinearLayout graphViewLayout;
+    GraphView graphView;
+    Context handler;
 
     /** Called when the activity is first created. */
     @Override
@@ -53,6 +62,29 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.main);
+
+        handler = this;
+
+        viewFlipper = (ViewFlipper) findViewById(R.id.viewFlipper);
+        graphs = (Button) findViewById(R.id.graphButton);
+        graphs.setOnClickListener(new OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+                viewFlipper.setInAnimation(AnimationUtils.loadAnimation(handler, R.anim.slide_in_right));
+                viewFlipper.setOutAnimation(AnimationUtils.loadAnimation(handler, R.anim.slide_out_right));
+                viewFlipper.showNext();
+            }
+        });
+
+        GraphViewSeries series = new GraphViewSeries(new GraphView.GraphViewData[] {
+                new GraphView.GraphViewData(0, 0.0d)
+        });
+
+        graphView = new LineGraphView(this, "");
+        graphView.addSeries(series);
+        graphViewLayout = (LinearLayout) findViewById(R.id.graphViewLayout);
+        graphViewLayout.addView(graphView);
 
         txtTemp = (TextView) findViewById(R.id.txtTemp);      // for display the received data from the Arduino
 
@@ -74,7 +106,7 @@ public class MainActivity extends Activity {
                                 Log.d("INT", e.toString());
                             }
 
-                            txtTemp.setText(String.format("%.2f °C", (double) (response) / 100.0, 3));            // update TextView
+                            txtTemp.setText(String.format("%.1f °C", (double) (response) / 100.0, 3));            // update TextView
                         }
                         //Log.d(TAG, "...String:"+ sb.toString() +  "Byte:" + msg.arg1 + "...");
                         break;

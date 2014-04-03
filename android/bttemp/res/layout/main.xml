@@ -3,11 +3,11 @@
                 xmlns:tools="http://schemas.android.com/tools" android:orientation="vertical"
               android:layout_width="fill_parent"
               android:layout_height="fill_parent"
-        >
+              android:background="#ffffff">
     <RelativeLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content" android:layout_alignParentTop="false" android:background="#ffffff"
-            android:id="@+id/header">
+            android:id="@+id/header" android:layout_marginBottom="5dp">
         <TextView
                 android:layout_width="fill_parent"
                 android:layout_height="40dp"
@@ -22,30 +22,36 @@
                     android:id="@+id/txtTemp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="66.00 °C" android:textColor="#660000" android:layout_alignParentEnd="false"
+                    android:text="66.5 °C" android:textColor="#660000" android:layout_alignParentEnd="false"
                     android:layout_alignParentRight="true" android:textSize="40dp"/>
             <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="75"
-                    android:id="@+id/textView2" android:textColor="#ffffff" android:textSize="20dp"/>
+                    android:text="Set: 75.0 °C"
+                    android:id="@+id/textView2" android:textColor="#000000" android:textSize="20dp"/>
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="ETA: 1:59"
+                    android:id="@+id/textView3" android:layout_below="@+id/textView2" android:textColor="#000000"/>
         </RelativeLayout>
     </RelativeLayout>
     <ViewFlipper
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/viewFlipper" android:layout_below="@+id/header" android:layout_above="@+id/footer">
+            android:id="@+id/viewFlipper" android:layout_below="@+id/header" android:layout_above="@+id/footer"
+            android:animateFirstView="false">
         <ListView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/listView" android:layout_above="@+id/footer"
                 android:smoothScrollbar="true" android:layout_below="@+id/header" android:background="#ffffff"
-                tools:listitem="@layout/list"/>
-        <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="New Button"
-                android:id="@+id/button3"/>
+                tools:listitem="@layout/list" android:longClickable="true" android:clickable="true"/>
+        <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent" android:id="@+id/graphViewLayout">
+        </LinearLayout>
     </ViewFlipper>
     <LinearLayout
             android:orientation="horizontal"
@@ -55,13 +61,18 @@
         <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Presets"
-                android:id="@+id/button" android:layout_marginRight="20dp"/>
+                android:text="Add entry"
+                android:id="@+id/button2"/>
         <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:text="Set manually"
+                android:id="@+id/button"/>
+        <ToggleButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:text="Graph"
-                android:id="@+id/button2" android:layout_marginLeft="20dp"/>
+                android:id="@+id/graphButton" android:textOn="Graph" android:textOff="Graph"/>
     </LinearLayout>
 </RelativeLayout>
 
